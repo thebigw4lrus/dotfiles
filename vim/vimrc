@@ -1,0 +1,269 @@
+" Define autocmd group vimrc.
+augroup myvimrc
+  autocmd!
+augroup END
+
+set rtp+=~/.vim/bundle/Vundle.vim
+
+filetype off
+call vundle#begin()
+
+Plugin 'gmarik/Vundle.vim'
+Plugin 'scrooloose/syntastic'
+Plugin 'christoomey/vim-tmux-navigator'
+Plugin 'tomasr/molokai'
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
+Plugin 'edkolev/tmuxline.vim'
+Plugin 'tpope/vim-surround'
+Plugin 'tpope/vim-fugitive'
+Plugin 'tpope/vim-commentary'
+Plugin 'tpope/vim-repeat'
+Plugin 'tpope/vim-dispatch'
+Plugin 'airblade/vim-gitgutter'
+Plugin 'kien/ctrlp.vim'
+Plugin 'Yggdroot/indentLine'
+Plugin 'davidhalter/jedi-vim'
+Plugin 'ervandew/supertab'
+Plugin 'scrooloose/nerdtree'
+Plugin 'SirVer/ultisnips'
+
+call vundle#end()
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Plugins settings
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Syntastic
+let g:syntastic_enable_signs=1
+let g:syntastic_auto_jump=0
+let g:syntastic_auto_loc_list=1
+
+let g:syntastic_ruby_checkers=['rubocop', 'mri']
+let g:syntastic_python_checkers=['pep8', 'pyflakes']
+let g:syntastic_javascript_checkers=['jshint']
+let g:syntastic_scala_checkers=['scalac', 'scalastyle'] 
+
+" Vim-Tmux-Navigator
+let g:tmux_navigator_no_mappings = 1
+
+" Airline
+let g:airline_theme = "powerlineish"
+let g:airline_powerline_fonts = 1
+
+" Supertab
+let g:SuperTabDefaultCompletionType = "<C-n>"
+
+" UltiSnips
+let g:UltiSnipsExpandTrigger = "<tab>"
+let g:UltiSnipsJumpForwardTrigger = "<tab>"
+let g:UltiSnipsJumpBackwardTrigger = "<S-tab>"
+let g:UltiSnipsSnippetDir="~/.vim/UltiSnips"
+
+" CtrlP Settings
+let g:ctrlp_max_height = 10
+let g:ctrlp_match_window = 'bottom,order:ttb'
+let g:ctrlp_switch_buffer = 0
+let g:ctrlp_working_path_mode = 0
+
+" Jedi-vim
+let g:jedi#use_splits_not_buffers = "right"
+
+"Disptach
+autocmd myvimrc FileType python let b:dispatch = 'py.test %'
+nnoremap <F9> :Dispatch<CR>
+
+" Toggle NERDTree hotkey
+map <F2> :NERDTreeToggle<CR>
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => General
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+let mapleader=','
+" Quickly edit/reload the vimrc file
+nmap <silent> <leader>ev :vsplit $MYVIMRC<CR>
+nmap <silent> <leader>et :vsplit ~/.tmux.conf<CR>
+nmap <silent> <leader>ed :vsplit ~/.bash_profile<CR>
+nmap <silent> <leader>r :so $MYVIMRC<CR>
+
+" CLI/ GUI settings
+if has("gui_running")
+    " Start window maximized
+    set lines=999 columns=999
+    " Fix Powerline icons for the GUI
+    set guifont=Inconsolata\ for\ Powerline:h15
+else
+    " Fix molokai color schema for the CLI
+    set term=xterm-256color
+    let g:rehash256 = 1
+endif
+
+" Vim, not vi
+set nocompatible
+
+" Show the command shortcut in the status line
+set showcmd
+
+" Optimize redrawing (improves speed)
+set lazyredraw
+set ttyfast
+
+" Raise a dialogue for saving changes
+set confirm
+
+" Enable file type detection and plugin loading
+filetype plugin indent on
+
+" Use Unix as the standard file type
+set ffs=unix,mac,dos
+
+" Set output encoding
+set encoding=utf-8
+
+" Autoupdate file changes made outside vim
+set autoread
+
+" Set filetype specific options via modelines
+set modeline
+
+" Disable backups
+set nobackup
+set noswapfile
+set nowritebackup
+
+" Always display the status line, even if only one window is displayed
+set laststatus=2
+
+" Ignore these files
+set wildignore+=*.pyc,*_build/*,*/coverage/*
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => VIM user interface
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" Colorscheme
+try
+    colors molokai
+catch
+endtry
+
+" Enable syntax highlighing
+syntax enable
+
+" Open splitpanes below and on the right of the current one.
+set splitbelow
+set splitright
+
+" Toggle highlighting current line only in active splits
+autocmd myvimrc VimEnter,WinEnter,BufWinEnter * setlocal cursorline
+autocmd myvimrc WinLeave * setlocal nocursorline
+
+" Highlight current line
+set cursorline 
+
+" Line numbers
+set number
+set relativenumber
+map <F4> :set relativenumber!<CR>
+map! <F4> <Esc>:set relativenumber!<CR>gi
+
+" Regex and search options
+set ignorecase
+set smartcase
+set hlsearch
+set incsearch
+set magic
+
+" Temporary turn off hlsearch
+nnoremap <silent> <leader><CR> :noh<CR>
+
+" Save files
+nmap <leader>w :w<CR>
+imap <leader>w <Esc>:w<CR>gi
+vmap <leader>w <Esc>:w<CR>gv
+
+" Close files (will raise confirmation dialog for unsaved changes)
+nmap <leader>q :q<CR>
+imap <leader>q <Esc>:q<CR>gi
+vmap <leader>q <Esc>:q<CR>gv
+
+" Visual autocomplete for command menu
+set wildmenu
+" First tab will complete to the longest common string 
+set wildmode=longest:full,full
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Text and formatting
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" Allow backspacing over everything in insert mode
+set backspace=indent,eol,start
+
+" Use 4 spaces instead of tabs
+set tabstop=4
+set shiftwidth=4
+set expandtab
+
+" Use 2 spaces instead of tabs for HTML and YAML files
+autocmd myvimrc FileType html,yaml setlocal shiftwidth=2 tabstop=2
+
+" Wrap lines to 72 characters in git commit messages and use 2 spaces for tab
+autocmd myvimrc FileType gitcommit setlocal spell textwidth=72 shiftwidth=2 tabstop=2
+
+" Don't leave space between joined lines
+set nojoinspaces
+
+" Fix identation when pasting in Insert mode
+set pastetoggle=<F3>
+
+" Sort lines alphabetically (useful for sorting Python imports)
+vnoremap <leader>s :sort<CR>
+
+" Go back to visual mode after reindenting
+vnoremap < <gv
+vnoremap > >gv
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Navigation and moving around
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" Exit insert mode with jj
+inoremap jj <Esc>
+
+" Go to the next line in editor for wrapped lines
+nnoremap j gj
+nnoremap k gk
+
+"Easier navigation through split windows
+nnoremap <C-j> <C-w><Down>
+nnoremap <C-k> <C-w><Up>
+nnoremap <C-l> <C-w><Right>
+nnoremap <C-h> <C-w><Left>
+
+nnoremap <silent> <C-h> :TmuxNavigateLeft<cr>
+nnoremap <silent> <C-j> :TmuxNavigateDown<cr>
+nnoremap <silent> <C-k> :TmuxNavigateUp<cr>
+nnoremap <silent> <C-l> :TmuxNavigateRight<cr>
+nnoremap <silent> <C-\> :TmuxNavigatePrevious<cr>
+
+" We say 'NO' to arrow keys
+nnoremap <Up> <NOP>
+nnoremap <Down> <NOP>
+nnoremap <Left> <NOP>
+nnoremap <Right> <NOP>
+inoremap <Up> <NOP>
+inoremap <Down> <NOP>
+inoremap <Left> <NOP>
+inoremap <Right> <NOP>
+
+" Useful mappings for managing tabs
+map <leader>tn :tabnew<cr>
+map <leader>to :tabonly<cr>
+map <leader>tc :tabclose<cr>
+map <leader>tm :tabmove
+
+" Remap 0 to go to first non-blank character of the line
+map 0 ^
+
+" Remap Y to apply till EOL, just like D and C.
+map Y y$

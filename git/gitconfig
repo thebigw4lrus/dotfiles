@@ -1,0 +1,33 @@
+[user]
+	name = Javier Contreras
+	email = jcontreras000@gmail.com
+[core]
+	editor = vim
+	mergeoptions = --no-edit
+[push]
+	default = simple
+[pull]
+	rebase = true
+[color]
+    branch = auto
+    diff = auto
+    status = auto
+    ui = auto
+[color "branch"]
+    current = yellow
+    local = blue
+    remote = magenta
+[color "diff"]
+    meta = blue
+    frag = magenta
+    old = red bold
+    new = green bold
+[color "status"]
+    added = green bold
+    changed = yellow bold
+    deleted = red bold
+    untracked = blue bold
+[pager]
+    log = .diff-highlight | less
+    show = .diff-highlight | less
+    diff = .diff-highlight | less
