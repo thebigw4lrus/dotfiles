@@ -1,17 +1,42 @@
-ALL   := tmux bash vim git 
+# Script to provision basic dev environment
+# and deploy dotfiles
+#
+PROVISION  := vim tmux vundle tig
+DEPLOY     := tmux bash vim git
 
-install: $(ALL:%=install-%)
+all: provision deploy
+provision: update-brew $(PROVISION:%=provision-%)
+deploy: $(DEPLOY:%=deploy-%)
 
-install-tmux:
+# deploy rules
+deploy-tmux:
 	ln -fs `pwd`/tmux/tmux.conf ~/.tmux.conf
 
-install-bash:
+deploy-bash:
 	touch ~/.bashrc
-	ln -fs `pwd`/bash/bashrc ~/.bashrc
+	ln -fs `pwd`/bash/bash_profile ~/.bash_profile
 
-install-git:
+deploy-git:
 	ln -fs `pwd`/git/gitconfig ~/.gitconfig
 
-install-vim:
+deploy-vim:
 	ln -fs `pwd`/vim/vimrc ~/.vimrc
 	vim +PluginInstall +qall
+
+# provision rules
+#
+update-brew:
+	brew update
+
+provision-tig:
+	brew install tig
+
+provision-tmux:
+	brew install tmux
+
+provision-vim:
+	brew install vim
+
+provision-vundle:
+	rm -rf ~/.vim/bundle/Vundle.vim
+	git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
