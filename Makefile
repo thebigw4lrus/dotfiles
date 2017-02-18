@@ -1,7 +1,7 @@
 # Script to provision basic dev environment
 # and deploy dotfiles
 #
-PROVISION  := vim tmux vundle tig
+PROVISION  := vim tmux vundle tig rbenv
 DEPLOY     := tmux bash vim git
 
 all: provision deploy
@@ -36,6 +36,10 @@ provision-tmux:
 
 provision-vim:
 	brew install vim
+
+provision-rbenv:
+	brew unlink rbenv
+	brew install rbenv
 
 provision-vundle:
 	rm -rf ~/.vim/bundle/Vundle.vim
