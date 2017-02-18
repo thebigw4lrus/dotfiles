@@ -40,6 +40,7 @@ provision-vim:
 provision-rbenv:
 	brew unlink rbenv
 	brew install rbenv
+	brew link rbenv
 
 provision-vundle:
 	rm -rf ~/.vim/bundle/Vundle.vim
