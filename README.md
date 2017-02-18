@@ -1,1 +1,1 @@
-My dotfiles===================Install-------Clone onto your laptop:    git clone git://github.com/thebigw4lrus/dotfiles.git ~/dotfilesInstall 'em:    make install
+My dotfiles===================Install-------Clone onto your laptop:    git clone git://github.com/thebigw4lrus/dotfiles.git ~/dotfilesProvision and deploy the dotfiles:    make all
