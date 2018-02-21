@@ -28,6 +28,7 @@ Plugin 'ervandew/supertab'
 Plugin 'scrooloose/nerdtree'
 Plugin 'SirVer/ultisnips'
 Bundle 'vim-ruby/vim-ruby'
+Plugin 'kristijanhusak/vim-carbon-now-sh'
 
 call vundle#end()
 
@@ -68,6 +69,9 @@ let g:ctrlp_working_path_mode = 0
 
 " Jedi-vim
 let g:jedi#use_splits_not_buffers = "right"
+
+" Carbon SH
+vnoremap <F5> :CarbonNowSh
 
 "Disptach
 autocmd myvimrc FileType python let b:dispatch = 'py.test %'
