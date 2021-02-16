@@ -267,3 +267,5 @@ map 0 ^
 
 " Remap Y to apply till EOL, just like D and C.
 map Y y$
+au VimEnter *  NERDTree
+
