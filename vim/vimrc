@@ -23,12 +23,12 @@ Plugin 'tpope/vim-dispatch'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'kien/ctrlp.vim'
 Plugin 'Yggdroot/indentLine'
-Plugin 'davidhalter/jedi-vim'
 Plugin 'ervandew/supertab'
 Plugin 'scrooloose/nerdtree'
 Plugin 'SirVer/ultisnips'
 Bundle 'vim-ruby/vim-ruby'
 Plugin 'kristijanhusak/vim-carbon-now-sh'
+Plugin 'greplace.vim'
 
 call vundle#end()
 
